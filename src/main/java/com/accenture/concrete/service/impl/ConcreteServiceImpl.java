@@ -77,18 +77,18 @@ public class ConcreteServiceImpl implements IConcreteService {
 	public List<SubCategoriaN2> getOthersCategorys() {
 
 		List<Categories> categorias = iClienteCategorias.getCategorias();
-		List<SubCategoriaN2> retorno = new ArrayList<>();
-		List<SubCategoriaN2> rest = getTopCategorias();
+		List<SubCategoriaN2> onlySubcategory = new ArrayList<>();
 
-		for (SubCategoriaN2 categories : rest) {
-			
-			for (Categories x1 : categorias) {
-				retorno = x1.getSubcategories();
-//				retorno.removeIf(x -> x1.contains(categories.get)); 
-				retorno.remove(categories);
+		for (Categories categories : categorias) {
+			if (onlySubcategory.isEmpty()) {
+				onlySubcategory.addAll(categories.getSubcategories());
 			}
 		}
-		return retorno;
+
+		List<SubCategoriaN2> rest = getTopCategorias();
+		onlySubcategory.removeAll(rest);
+
+		return onlySubcategory;
 	}
 
 }
