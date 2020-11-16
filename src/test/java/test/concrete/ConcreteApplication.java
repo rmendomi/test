@@ -1,129 +1,103 @@
 package test.concrete;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.powermock.api.mockito.PowerMockito;
+import org.springframework.http.ResponseEntity;
 
 import com.accenture.concrete.client.IClienteCategorias;
 import com.accenture.concrete.client.IClienteCupones;
+import com.accenture.concrete.controller.ConcreteController;
+import com.accenture.concrete.domain.Categories;
+import com.accenture.concrete.domain.SubCategoriaN2;
+import com.accenture.concrete.domain.SubCategoriaN3;
+import com.accenture.concrete.domain.SubCategoriaN4;
 import com.accenture.concrete.service.impl.ConcreteServiceImpl;
 
 @RunWith(MockitoJUnitRunner.class)
-class ConcreteApplication {
-
-
+public class ConcreteApplication {
 
 	@InjectMocks
-	ConcreteServiceImpl concreteServiceImpl;
+	private ConcreteServiceImpl concreteServiceImpl;
 
 	@Mock
-	IClienteCupones iClienteCuponesMock;
+	private IClienteCupones iClienteCuponesMock;
 
 	@Mock
-	IClienteCategorias iClienteCategoriasMock;
+	private IClienteCategorias iClienteCategoriasMock;
 
 	String responseCoupons = new String();
 
 	String responseCategory = new String();
 
+	List<Categories> categoriasRs;
+
+	ResponseEntity<List<SubCategoriaN2>> lstSubCatn2Rs;
+
+	List<SubCategoriaN2> rsgetTopCategorias;
+
+	@Mock
+	ConcreteController concreteController;
+
+	@Mock
+	IClienteCategorias iClienteCategorias;
+
 	@Before
-	public void cargaBody() {
+	public void init() {
+	
+		rsgetTopCategorias = new ArrayList<>();
 
-		responseCoupons = "[\n" + "  {\n" + "    \"id\": \"COUPON_1\",\n" + "    \"description\": \"50% Discount\",\n"
-				+ "    \"seller\": \"Crazy Seller\",\n"
-				+ "    \"image\": \"https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg\",\n"
-				+ "    \"expiresAt\": \"2045-12-01\"\n" + "  },\n" + "  {\n" + "    \"id\": \"COUPON_2\",\n"
-				+ "    \"description\": \"5% Discount\",\n" + "    \"seller\": \"The Seller\",\n"
-				+ "    \"image\": \"https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg\",\n"
-				+ "    \"expiresAt\": \"2042-12-25\"\n" + "  },\n" + "  {\n" + "    \"id\": \"COUPON_3\",\n"
-				+ "    \"description\": \"100% Discount\",\n" + "    \"seller\": \"Old Seller\",\n"
-				+ "    \"image\": \"https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg\",\n"
-				+ "    \"expiresAt\": \"2018-10-01\"\n" + "  },\n" + "  {\n" + "    \"id\": \"COUPON_4\",\n"
-				+ "    \"description\": \"1% Discount\",\n" + "    \"seller\": \"Mega Discount\",\n"
-				+ "    \"image\": \"https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg\",\n"
-				+ "    \"expiresAt\": \"2055-10-01\"\n" + "  },\n" + "  {\n" + "    \"id\": \"COUPON_5\",\n"
-				+ "    \"description\": \"100% Discount\",\n" + "    \"seller\": \"The Discount\",\n"
-				+ "    \"image\": \"https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg\",\n"
-				+ "    \"expiresAt\": \"2016-11-01\"\n" + "  }\n" + "]";
+		List<SubCategoriaN3> lstCategoriaN3 = new ArrayList<>();
 
-		responseCategory = "{\n" + "  \"id\": \"ROOT\",\n" + "  \"name\": \"LEGACY_NAVIGATION\",\n"
-				+ "  \"subcategories\": [\n" + "    {\n" + "      \"id\": \"MOB\",\n"
-				+ "      \"name\": \"MOBILE_MARKET\",\n" + "      \"subcategories\": [\n" + "        {\n"
-				+ "          \"id\": \"video-games\",\n" + "          \"name\": \"Video Games\",\n"
-				+ "          \"relevance\": 150,\n" + "          \"subcategories\": [\n" + "            {\n"
-				+ "              \"id\": \"nintendo\",\n" + "              \"name\": \"Nintendo\",\n"
-				+ "              \"subcategories\": [\n" + "                {\n"
-				+ "                  \"id\": \"switch\",\n" + "                  \"name\": \"Switch\",\n"
-				+ "                  \"relevance\": 422\n" + "                }\n" + "              ],\n"
-				+ "              \"largeImageUrl\": \"https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg\",\n"
-				+ "              \"mediumImageUrl\": \"https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg\",\n"
-				+ "              \"smallImageUrl\": \"https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg\"\n"
-				+ "            }\n" + "          ],\n"
-				+ "          \"iconImageUrl\": \"https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg\"\n"
-				+ "        },\n" + "        {\n" + "          \"id\": \"sports\",\n"
-				+ "          \"name\": \"Sports\",\n" + "          \"relevance\": 1,\n"
-				+ "          \"subcategories\": [\n" + "            {\n" + "              \"id\": \"bike\",\n"
-				+ "              \"name\": \"Bike\",\n" + "              \"relevance\": 350,\n"
-				+ "              \"subcategories\": [],\n"
-				+ "              \"largeImageUrl\": \"https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg\",\n"
-				+ "              \"mediumImageUrl\": \"https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg\",\n"
-				+ "              \"smallImageUrl\": \"https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg\"\n"
-				+ "            }\n" + "          ],\n"
-				+ "          \"iconImageUrl\": \"https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg\"\n"
-				+ "        },\n" + "        {\n" + "          \"id\": \"electronics\",\n"
-				+ "          \"name\": \"Electronics\",\n" + "          \"subcategories\": [\n" + "            {\n"
-				+ "              \"id\": \"tv\",\n" + "              \"name\": \"TV\",\n"
-				+ "              \"subcategories\": [\n" + "                {\n" + "                  \"id\": \"4k\",\n"
-				+ "                  \"name\": \"4K\",\n" + "                  \"relevance\": 700\n"
-				+ "                }\n" + "              ],\n"
-				+ "              \"largeImageUrl\": \"https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg\",\n"
-				+ "              \"mediumImageUrl\": \"https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg\",\n"
-				+ "              \"smallImageUrl\": \"https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg\"\n"
-				+ "            }\n" + "          ],\n"
-				+ "          \"iconImageUrl\": \"https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg\"\n"
-				+ "        },\n" + "        {\n" + "          \"id\": \"outdoor\",\n"
-				+ "          \"name\": \"Outdoor\",\n" + "          \"relevance\": 3,\n"
-				+ "          \"subcategories\": [],\n"
-				+ "          \"iconImageUrl\": \"https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg\"\n"
-				+ "        },\n" + "        {\n" + "          \"id\": \"food\",\n" + "          \"name\": \"Food\",\n"
-				+ "          \"relevance\": 4,\n" + "          \"subcategories\": [\n" + "            {\n"
-				+ "              \"id\": \"hamburger\",\n" + "              \"name\": \"Hamburger\",\n"
-				+ "              \"relevance\": 350,\n" + "              \"subcategories\": [],\n"
-				+ "              \"largeImageUrl\": \"https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg\",\n"
-				+ "              \"mediumImageUrl\": \"https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg\",\n"
-				+ "              \"smallImageUrl\": \"https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg\"\n"
-				+ "            }\n" + "          ],\n"
-				+ "          \"iconImageUrl\": \"https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg\"\n"
-				+ "        },\n" + "        {\n" + "          \"id\": \"books\",\n" + "          \"name\": \"Books\",\n"
-				+ "          \"relevance\": 2,\n" + "          \"subcategories\": [],\n"
-				+ "          \"iconImageUrl\": \"https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg\"\n"
-				+ "        },\n" + "        {\n" + "          \"id\": \"travel\",\n"
-				+ "          \"name\": \"Travel\",\n" + "          \"relevance\": 5,\n"
-				+ "          \"subcategories\": [],\n"
-				+ "          \"iconImageUrl\": \"https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg\"\n"
-				+ "        },\n" + "        {\n" + "          \"id\": \"health\",\n"
-				+ "          \"name\": \"Health\",\n" + "          \"relevance\": 6,\n"
-				+ "          \"subcategories\": [],\n"
-				+ "          \"iconImageUrl\": \"https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg\"\n"
-				+ "        },\n" + "        {\n" + "          \"id\": \"toys\",\n" + "          \"name\": \"Toys\",\n"
-				+ "          \"relevance\": 99,\n" + "          \"subcategories\": [\n" + "            {\n"
-				+ "              \"id\": \"puzzles\",\n" + "              \"name\": \"Puzzles\",\n"
-				+ "              \"relevance\": 100,\n" + "              \"subcategories\": [],\n"
-				+ "              \"largeImageUrl\": \"https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg\",\n"
-				+ "              \"mediumImageUrl\": \"https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg\",\n"
-				+ "              \"smallImageUrl\": \"https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg\"\n"
-				+ "            }\n" + "          ],\n"
-				+ "          \"iconImageUrl\": \"https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg\"\n"
-				+ "        }\n" + "      ]\n" + "    }\n" + "  ]\n" + "}";
+		List<SubCategoriaN4> lstCategoriaN4 = new ArrayList<>();
+
+		SubCategoriaN2 subCategoriesN2 = new SubCategoriaN2();
+		subCategoriesN2.setId("food");
+		subCategoriesN2.setName("Food");
+		subCategoriesN2.setRelevance(4);
+		subCategoriesN2
+				.setIconImageUrl("https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg");
+		subCategoriesN2.setSubcategories(lstCategoriaN3);
+		rsgetTopCategorias.add(subCategoriesN2);
+
+		SubCategoriaN3 subCategoriesN3 = new SubCategoriaN3();
+		subCategoriesN3.setId("hamburger");
+		subCategoriesN3.setName("Hamburger");
+		subCategoriesN3.setRelevance(350);
+		subCategoriesN3
+				.setLargeImageUrl("https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg");
+		subCategoriesN3
+				.setSmallImageUrl("https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg");
+		subCategoriesN3.setSubcategories(lstCategoriaN4);
+		lstCategoriaN3.add(subCategoriesN3);
+
+		SubCategoriaN4 subCategoriaN4 = new SubCategoriaN4();
+		lstCategoriaN4.add(subCategoriaN4);
+
+		categoriasRs = new ArrayList<Categories>();
+//		List<Categories> lstCategories = new ArrayList<>();
+		Categories Categories = new Categories();
+		Categories.setSubcategories(rsgetTopCategorias);
+		categoriasRs.add(Categories);
 
 	}
 
 	@Test
-	void contextLoads() {
+	public void testGetCategorias() {
+		PowerMockito.when(iClienteCategorias.getCategorias()).thenReturn(categoriasRs);
 
+		List<SubCategoriaN2> retorno = concreteServiceImpl.getTopCategorias();
+
+		assertEquals(retorno, rsgetTopCategorias);
 	}
 
 }

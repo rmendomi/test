@@ -30,8 +30,7 @@ public class ConcreteController implements Serializable {
 	private IConcreteService iConcreteService;
 
 	@GetMapping(path = "/topCategory", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<SubCategoriaN2>> getCategorias(
-			@RequestHeader("X-Application-Name") String xApplicationName) {
+	public ResponseEntity<List<SubCategoriaN2>> getCategorias() {
 
 		List<SubCategoriaN2> categories = iConcreteService.getTopCategorias();
 
@@ -39,8 +38,7 @@ public class ConcreteController implements Serializable {
 	}
 
 	@GetMapping(path = "/otherCategory", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<SubCategoriaN2>> getOtherCategorys(
-			@RequestHeader("X-Application-Name") String xApplicationName) {
+	public ResponseEntity<List<SubCategoriaN2>> getOtherCategorys() {
 
 		List<SubCategoriaN2> categories = iConcreteService.getOthersCategorys();
 
@@ -48,7 +46,7 @@ public class ConcreteController implements Serializable {
 	}
 
 	@GetMapping(path = "/getCouponsNoExp", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Coupon>> getCupones(@RequestHeader("X-Application-Name") String xApplicationName) {
+	public ResponseEntity<List<Coupon>> getCupones() {
 
 		List<Coupon> categories = iConcreteService.getCupones();
 

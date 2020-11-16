@@ -49,7 +49,8 @@ public class ConcreteServiceImpl implements IConcreteService {
 		for (SubCategoriaN2 x1 : myLastPosts) {
 			log.info("Retorno servicio: {}", x1.toString());
 		}
-
+		log.info("---------------------------------------------------");
+		log.info(myLastPosts.toString());
 		// TODO: falta dar vuelta los registros enviados(de bonito).
 		return myLastPosts;
 	}
@@ -89,6 +90,11 @@ public class ConcreteServiceImpl implements IConcreteService {
 		onlySubcategory.removeAll(rest);
 
 		return onlySubcategory;
+	}
+
+	public Object getCategorias(Object any) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

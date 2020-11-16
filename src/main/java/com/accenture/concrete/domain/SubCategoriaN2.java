@@ -31,9 +31,5 @@ public class SubCategoriaN2 implements Serializable {
     
     List<SubCategoriaN3> subcategories;
 
-	public Object startsWith(List<SubCategoriaN2> rest) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }
