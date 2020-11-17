@@ -31,6 +31,7 @@ public class ClienteCategoriasClient implements IClienteCategorias {
 	
 	@Autowired
 	private CacheManager cacheManager;
+	
 
 	@Value("${client.url.service.categorias}")
 	private String url;
