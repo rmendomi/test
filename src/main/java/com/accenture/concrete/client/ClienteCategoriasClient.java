@@ -28,10 +28,9 @@ import lombok.extern.slf4j.Slf4j;
 public class ClienteCategoriasClient implements IClienteCategorias {
 
 	private RestTemplate restTemplate = new RestTemplate();
-	
+
 	@Autowired
 	private CacheManager cacheManager;
-	
 
 	@Value("${client.url.service.categorias}")
 	private String url;
@@ -50,9 +49,7 @@ public class ClienteCategoriasClient implements IClienteCategorias {
 
 	}
 
-
-
-	@Scheduled(cron = "0 1/2 * * * *") 
+	@Scheduled(cron = "0 1/2 * * * *")
 	public void clearCacheSchedule() {
 
 		cacheManager.getCache("categories").clear();
