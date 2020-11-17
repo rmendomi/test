@@ -7,7 +7,23 @@ plugins {
 group = 'com.accenture'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '8'
+apply plugin: 'jacoco'
 
+
+jacoco {
+    toolVersion = "0.8.2"
+    reportsDir = file("$buildDir/customJacocoReportDir")
+}
+
+ 
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination file("${buildDir}/jacocoHtml")
+    }
+    }
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
@@ -20,6 +36,7 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-cache'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -29,6 +46,4 @@ dependencies {
 	compile group: 'org.powermock', name: 'powermock-api-mockito2', version: '2.0.0'
 }
 
-test {
-	useJUnitPlatform()
-}
+

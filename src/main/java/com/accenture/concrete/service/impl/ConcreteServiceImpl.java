@@ -4,10 +4,11 @@
 package com.accenture.concrete.service.impl;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,17 +34,24 @@ public class ConcreteServiceImpl implements IConcreteService {
 
 	@Override
 	public List<SubCategoriaN2> getTopCategorias() {
-
+		
 		List<Categories> categorias = iClienteCategorias.getCategorias();
 		List<SubCategoriaN2> cat2 = new ArrayList<>();
 
 		for (Categories categories : categorias) {
 			cat2 = categories.getSubcategories();
 		}
-
+		
 		List<SubCategoriaN2> sortedList = cat2.stream().sorted(Comparator.comparingInt(SubCategoriaN2::getRelevance))
 				.collect(Collectors.toList());
-		List<SubCategoriaN2> myLastPosts = sortedList.subList(sortedList.size() - 5, sortedList.size());
+
+		List<SubCategoriaN2> myLastPosts = new ArrayList<>();
+		
+		if (5 <= sortedList.size()) {
+			myLastPosts = sortedList.subList(sortedList.size() - 5, sortedList.size());
+		}else {
+			myLastPosts.addAll(sortedList);
+		}
 
 		log.info("---------------------------------------------------");
 		for (SubCategoriaN2 x1 : myLastPosts) {
@@ -51,7 +59,7 @@ public class ConcreteServiceImpl implements IConcreteService {
 		}
 		log.info("---------------------------------------------------");
 		log.info(myLastPosts.toString());
-		// TODO: falta dar vuelta los registros enviados(de bonito).
+		
 		return myLastPosts;
 	}
 
@@ -59,15 +67,11 @@ public class ConcreteServiceImpl implements IConcreteService {
 	public List<Coupon> getCupones() {
 		List<Coupon> cupones = iClienteCupones.getCupones();
 		List<Coupon> returnCoupones = new ArrayList<>();
-		Date today = new Date();
+
 		for (Coupon x1 : cupones) {
-			try {
-				Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(x1.getExpiresAt());
-				if (today.before(date1)) {
-					returnCoupones.add(x1);
-				}
-			} catch (ParseException e) {
-				log.error("Exception ParseException", e);
+			LocalDate date = LocalDate.parse(x1.getExpiresAt());
+			if (LocalDate.now().isBefore(date)) {
+				returnCoupones.add(x1);
 			}
 			log.info("Retorno servicio: {}", returnCoupones.toString());
 		}
@@ -90,11 +94,6 @@ public class ConcreteServiceImpl implements IConcreteService {
 		onlySubcategory.removeAll(rest);
 
 		return onlySubcategory;
-	}
-
-	public Object getCategorias(Object any) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
