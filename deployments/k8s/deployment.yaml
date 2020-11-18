@@ -21,18 +21,5 @@ spec:
       - image: gcr.io/psyched-age-295904/concrete-test:latest
         name: concrete-test
         resources: {}
-        env:
-        - name: _PROJECT_ID
-          value: "concrete-test"
-        - name: _IMAGE_NAME
-          value: "ENVIRONMENT"
-        - name: _TAG
-          value: "ENVIRONMENT"
-        - name: _DOCKERFILE
-          value: "ENVIRONMENT"
-        - name: _LOCATION
-          value: "ENVIRONMENT" 
-        - name: _CLUSTER_NAME
-          value: "ENVIRONMENT" 
         
 status: {}

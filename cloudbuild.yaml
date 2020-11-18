@@ -1,13 +1,13 @@
 steps:
   # build the container image
 - name: "gcr.io/cloud-builders/docker"
-  args: ["build", "-t", "gcr.io/${_PROJECT_ID}/${_IMAGE_NAME}:${_TAG}", "${_DOCKERFILE}"]
+  args: [ 'build', '-t', 'gcr.io/concrete-test/psyched-age-295904', '.' ]
   # push container image
 - name: "gcr.io/cloud-builders/docker"
-  args: ["push", "gcr.io/${_PROJECT_ID}/${_IMAGE_NAME}:${_TAG}"]
+  args: ["push", "gcr.io/concrete-test/psyched-age-295904:${_TAG}"]
   # deploy container image to GKE
 - name: "gcr.io/cloud-builders/kubectl"
   args: ["apply", "-f", "${_DOCKERFILE}/deployments/k8s/"]
   env:
-  - 'CLOUDSDK_COMPUTE_ZONE=${_LOCATION}'
+  - 'CLOUDSDK_COMPUTE_ZONE=us-east4-b'
   - 'CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER_NAME}'
