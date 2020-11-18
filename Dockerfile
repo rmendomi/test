@@ -1,16 +1,12 @@
-FROM gcr.io/google-appengine/openjdk:8
+FROM gradle:4.7.0-jdk8-alpine AS build
+COPY --chown=gradle:gradle . /home/gradle/src
+WORKDIR /home/gradle/src
+RUN gradle build --no-daemon 
 
-# Default to UTF-8 file.encoding
-ENV LANG C.UTF-8
+FROM openjdk:8-jre-slim
 
-# Default copy (Gradle)
-COPY ./build/libs/*.jar /api/app.jar
+RUN mkdir /app
 
-# Default workspace dir
-RUN ls /api
-WORKDIR /api
+COPY --from=build /home/gradle/src/build/libs/*.jar /app/spring-boot-application.jar
 
-# no root execution
-USER www-data
-
-ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-Doracle.jdbc.timezoneAsRegion=false", "-jar", "/api/app.jar"]
+ENTRYPOINT ["java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-Djava.security.egd=file:/dev/./urandom","-jar","/app/spring-boot-application.jar"]
