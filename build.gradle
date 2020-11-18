@@ -9,12 +9,6 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '8'
 apply plugin: 'jacoco'
 
-jar {
-  manifest {
-   
-  }
-}
-
 
 jacoco {
     toolVersion = "0.8.2"
