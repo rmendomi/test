@@ -1,4 +1,7 @@
 steps:
+- name: gradle:5.6.2-jdk8
+  entrypoint: gradle
+  args: ['assemble']
   # build the container image
 - name: gcr.io/cloud-builders/docker
   args: ['build', '-t', 'gcr.io/concrete-test/psyched-age-295904', '--build-arg=JAR_FILE=build/libs/concrete-0.0.1-SNAPSHOT.jar', '.']
