@@ -53,8 +53,8 @@ public class ClienteCategoriasClient implements IClienteCategorias {
 	}
 
 	/**
-	 * Clear cache schedule 30 segundos.
-	 * La implementacion de este metodo esta en caso de inestabilidad y/o demoras en la respuesta del
+	 * Clear cache schedule 2 minutos.
+	 * La implementacion de este metodo esta en caso de inestabilidad y/o demoras en la respuesta del servicio
 	 */
 	@Scheduled(cron = "0 1/2 * * * *")
 	public void clearCacheSchedule() {
