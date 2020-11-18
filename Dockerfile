@@ -1,10 +1,16 @@
-  
-FROM java
+FROM gcr.io/google-appengine/openjdk:8
 
-VOLUME /tmp
+# Default to UTF-8 file.encoding
+ENV LANG C.UTF-8
 
-ADD spring-boot-gradle-docker-0.1.0.jar spring-boot-app.jar
+# Default copy (Gradle)
+COPY ./build/libs/*.jar /api/app.jar
 
-RUN bash -c 'touch /spring-boot-app.jar'
+# Default workspace dir
+RUN ls /api
+WORKDIR /api
 
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/spring-boot-app.jar"]
+# no root execution
+USER www-data
+
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-Doracle.jdbc.timezoneAsRegion=false", "-jar", "/api/app.jar"]
