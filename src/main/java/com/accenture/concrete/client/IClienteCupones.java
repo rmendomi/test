@@ -8,4 +8,5 @@ public interface IClienteCupones {
 
 	List<Coupon> getCupones();
 
+	void clearCacheSchedule();
 }
