@@ -1,4 +1,4 @@
-FROM gradle:6.6.1-bin-jdk8-alpine AS build
+FROM gcr.io/google-appengine/openjdk:8
 COPY --chown=gradle:gradle . /home/gradle/src
 WORKDIR /home/gradle/src
 RUN gradle build --no-daemon 
