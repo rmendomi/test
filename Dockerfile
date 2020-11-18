@@ -1,3 +1,4 @@
+FROM openjdk:12-jdk-alpine
 ENV GRADLE_HOME=/app/gradle-2.4
 ENV PATH=$PATH:$GRADLE_HOME/bin
 COPY --chown=gradle:gradle . /home/gradle/src
