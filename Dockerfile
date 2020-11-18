@@ -5,7 +5,7 @@ ENV LANG C.UTF-8
 
 # Default copy (Gradle)
 COPY ./build/libs/*.jar /api/app.jar
-COPY ./src/main/resources/json/*.* src/main/resources/json/
+
 # Default workspace dir
 RUN ls /api
 WORKDIR /api
