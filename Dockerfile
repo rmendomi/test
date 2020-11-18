@@ -4,7 +4,7 @@ FROM gcr.io/google-appengine/openjdk:8
 ENV LANG C.UTF-8
 
 # Default copy (Gradle)
-COPY /build/libs/concrete-0.0.1-SNAPSHOT.jar /api/app.jar
+COPY ./build/libs/concrete-0.0.1-SNAPSHOT.jar /api/app.jar
 
 # Default workspace dir
 RUN ls /api
