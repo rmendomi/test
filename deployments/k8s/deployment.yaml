@@ -27,7 +27,7 @@ status: {}
 apiVersion: v1
 kind: Service
 metadata:
-  name: REPOSITORY_NAME
+  name: concrete-test
   annotations:
     cloud.google.com/neg: '{"ingress": true}'
 spec:
@@ -37,5 +37,5 @@ spec:
     protocol: TCP
     targetPort: 8090
   selector:
-    app: REPOSITORY_NAME
+    app: concrete-test
   type: LoadBalancer
