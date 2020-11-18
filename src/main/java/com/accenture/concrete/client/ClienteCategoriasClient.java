@@ -20,9 +20,6 @@ import com.accenture.concrete.domain.CategoryThree;
 
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * Categorias
- */
 @Slf4j
 @Service
 public class ClienteCategoriasClient implements IClienteCategorias {
@@ -35,13 +32,19 @@ public class ClienteCategoriasClient implements IClienteCategorias {
 	@Value("${client.url.service.categorias}")
 	private String url;
 
+	/**
+	 * Gets the categorias.
+	 *
+	 * @return the categorias
+	 */
 	@Cacheable("categories")
 	public List<Categories> getCategorias() {
 		HttpEntity<String> request = new HttpEntity<>(null);
 		ResponseEntity<CategoryThree> entity = new ResponseEntity<>(HttpStatus.OK);
 		try {
+			log.debug("---------------------------INICIO: getCategorias--------------------------");
 			entity = restTemplate.exchange(url, HttpMethod.GET, request, CategoryThree.class);
-
+			log.debug("---------------------------INICIO: getCategorias--------------------------");
 		} catch (RestClientException e) {
 			log.error("Error : ", e);
 		}
@@ -49,11 +52,15 @@ public class ClienteCategoriasClient implements IClienteCategorias {
 
 	}
 
+	/**
+	 * Clear cache schedule 30 segundos.
+	 * La implementacion de este metodo esta en caso de inestabilidad y/o demoras en la respuesta del
+	 */
 	@Scheduled(cron = "0 1/2 * * * *")
 	public void clearCacheSchedule() {
 
 		cacheManager.getCache("categories").clear();
-		log.error("Clean Cache");
+		log.debug("Clean Cache categories");
 		getCategorias();
 	}
 

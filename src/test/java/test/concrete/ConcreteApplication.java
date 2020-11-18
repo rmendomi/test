@@ -16,8 +16,8 @@ import org.springframework.http.ResponseEntity;
 
 import com.accenture.concrete.client.IClienteCategorias;
 import com.accenture.concrete.client.IClienteCupones;
-import com.accenture.concrete.controller.ConcreteController;
 import com.accenture.concrete.domain.Categories;
+import com.accenture.concrete.domain.Coupon;
 import com.accenture.concrete.domain.SubCategoriaN2;
 import com.accenture.concrete.domain.SubCategoriaN3;
 import com.accenture.concrete.domain.SubCategoriaN4;
@@ -30,24 +30,18 @@ public class ConcreteApplication {
 	private ConcreteServiceImpl concreteServiceImpl;
 
 	@Mock
-	private IClienteCupones iClienteCuponesMock;
-
-	@Mock
-	private IClienteCategorias iClienteCategoriasMock;
-
-	@Mock
-	ConcreteController concreteController;
+	IClienteCupones iClienteCupones;
 
 	@Mock
 	IClienteCategorias iClienteCategorias;
 
 	String responseCoupons = new String();
 	String responseCategory = new String();
-	List<Categories> rsGetCategoriasOthers;
 	List<Categories> rsGetCategorias;
 	ResponseEntity<List<SubCategoriaN2>> lstSubCatn2Rs;
-	List<SubCategoriaN2> assertOtherCategory;
 	List<SubCategoriaN2> assertGetCategorias;
+	List<Coupon> allCouponRs;
+	List<Coupon> assertRetorno;
 
 	@Before
 	public void beforeGetCategorias() {
@@ -90,51 +84,55 @@ public class ConcreteApplication {
 
 	}
 
+
+	
 	@Before
 	public void beforeOtherCategory() {
-
-		assertOtherCategory = new ArrayList<>();
-		List<SubCategoriaN3> lstCategorias1N3 = new ArrayList<>();
-		List<SubCategoriaN4> lstCategorias1N4 = new ArrayList<>();
-		SubCategoriaN4 subCategoria1N4 = new SubCategoriaN4();
-		rsGetCategoriasOthers = new ArrayList<Categories>();
-
+		allCouponRs = new ArrayList<Coupon>();
+		assertRetorno = new ArrayList<Coupon>();
 		
-		Categories categorias = new Categories();
-		categorias.setSubcategories(assertOtherCategory);
-		categorias.setId("otros");
-		categorias.setName("otros");
-		categorias.setRelevance(0);
-		rsGetCategoriasOthers.add(categorias);
+		Coupon coupon1 = new Coupon();
+		coupon1.setDescription("50% Discount");
+		coupon1.setExpiresAt("2045-12-01");
+		coupon1.setId("COUPON_1");
+		coupon1.setImage("https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg");
+		coupon1.setSeller("Crazy Seller");
+		allCouponRs.add(coupon1);
+		assertRetorno.add(coupon1);
 		
+		Coupon coupon2 = new Coupon();
+		coupon2.setDescription("50% Discount");
+		coupon2.setExpiresAt("2035-12-01");
+		coupon2.setId("COUPON_1");
+		coupon2.setImage("https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg");
+		coupon2.setSeller("Crazy Seller");
+		allCouponRs.add(coupon2);
+		assertRetorno.add(coupon2);
 		
-		SubCategoriaN2 subcat1N2 = new SubCategoriaN2();
-		subcat1N2.setId("food");
-		subcat1N2.setName("Food");
-		subcat1N2.setRelevance(4);
-		subcat1N2
-				.setIconImageUrl("https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg");
-		subcat1N2.setSubcategories(lstCategorias1N3);
-		assertOtherCategory.add(subcat1N2);
-
-		SubCategoriaN3 subCategoriesN3 = new SubCategoriaN3();
-		subCategoriesN3.setId("hamburger");
-		subCategoriesN3.setName("Hamburger");
-		subCategoriesN3.setRelevance(350);
-		subCategoriesN3
-				.setLargeImageUrl("https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg");
-		subCategoriesN3
-				.setSmallImageUrl("https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg");
-		subCategoriesN3.setSubcategories(lstCategorias1N4);
-		lstCategorias1N3.add(subCategoriesN3);
-
+		Coupon coupon3 = new Coupon();
+		coupon3.setDescription("50% Discount");
+		coupon3.setExpiresAt("2060-12-01");
+		coupon3.setId("COUPON_1");
+		coupon3.setImage("https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg");
+		coupon3.setSeller("Crazy Seller");
+		allCouponRs.add(coupon3);
+		assertRetorno.add(coupon3);
 		
-		lstCategorias1N4.add(subCategoria1N4);
-
+		Coupon coupon4 = new Coupon();
+		coupon4.setDescription("50% Discount");
+		coupon4.setExpiresAt("2012-12-01");
+		coupon4.setId("COUPON_1");
+		coupon4.setImage("https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg");
+		coupon4.setSeller("Crazy Seller");
+		allCouponRs.add(coupon4);
 		
-
-		
-		
+		Coupon coupon5 = new Coupon();
+		coupon5.setDescription("50% Discount");
+		coupon5.setExpiresAt("2011-12-01");
+		coupon5.setId("COUPON_1");
+		coupon5.setImage("https://i4.visitchile.com/img/GalleryContent/8822/slider/Torres_del_Paine.jpg");
+		coupon5.setSeller("Crazy Seller");
+		allCouponRs.add(coupon5);
 		
 		
 
@@ -149,13 +147,13 @@ public class ConcreteApplication {
 		assertEquals(retorno, assertGetCategorias);
 	}
 
-//	@Test
-//	public void testOtherCategory() {
-//		Mockito.when(iClienteCategorias.getCategorias()).thenReturn(rsGetCategoriasOthers);
-//
-//		List<SubCategoriaN2> retorno = concreteServiceImpl.getOthersCategorys();
-//
-//		assertEquals(retorno, assertOtherCategory);
-//	}
+	@Test
+	public void testGetCupones() {
+		Mockito.when(iClienteCupones.getCupones()).thenReturn(allCouponRs);
+
+		List<Coupon> retorno = concreteServiceImpl.getCupones();
+
+		assertEquals(retorno, assertRetorno);
+	}
 
 }

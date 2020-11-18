@@ -6,7 +6,6 @@ import com.accenture.concrete.domain.Coupon;
 
 public interface IClienteCupones {
 
-	
 	List<Coupon> getCupones();
 
 }

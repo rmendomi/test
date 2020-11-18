@@ -15,19 +15,16 @@ import lombok.ToString;
 @Setter
 public class Coupon implements Serializable {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    String id;
+	String id;
 
-    String description;
+	String description;
 
-    String seller;
+	String seller;
 
-    String image;
+	String image;
 
-    String expiresAt;
+	String expiresAt;
 
 }
