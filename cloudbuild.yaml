@@ -10,7 +10,7 @@ steps:
   args: ["push", "gcr.io/psyched-age-295904/concrete-test:latest"]
   # deploy container image to GKE
 - name: "gcr.io/cloud-builders/kubectl"
-  args: ["apply", "-f", "${_DOCKERFILE}/deployments/k8s/"]
+  args: ["apply", "-f", "/deployments/k8s/"]
   env:
-  - 'CLOUDSDK_COMPUTE_ZONE=us-east4-b'
-  - 'CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER_NAME}'
+  - 'CLOUDSDK_COMPUTE_ZONE=southamerica-east1-b'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=concreta-1'
