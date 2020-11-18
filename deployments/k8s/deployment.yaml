@@ -23,3 +23,20 @@ spec:
         resources: {}
         
 status: {}
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: REPOSITORY_NAME
+  annotations:
+    cloud.google.com/neg: '{"ingress": true}'
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 8090
+  selector:
+    app: REPOSITORY_NAME
+  type: LoadBalancer
