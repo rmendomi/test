@@ -16,20 +16,16 @@ import lombok.ToString;
 @Setter
 public class SubCategoriaN2 implements Serializable {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    String id;
+	String id;
 
-    String name;
+	String name;
 
-    int relevance;
+	int relevance;
 
-    String iconImageUrl;
-    
-    List<SubCategoriaN3> subcategories;
+	String iconImageUrl;
 
+	List<SubCategoriaN3> subcategories;
 
 }
